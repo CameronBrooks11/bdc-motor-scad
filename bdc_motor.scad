@@ -112,6 +112,11 @@ function motor_length(motor_body_x = motor_body_x, motor_back_x = motor_back_x,
 
 function motor_axle_length(motor_axle_length = motor_axle_length) = motor_axle_length;
 function motor_body_height(motor_body_z = motor_body_z) = motor_body_z;
+// Body width, side to side across the round sides
+function motor_body_width(motor_body_y = motor_body_y) = motor_body_y;
+// [start, end] along x of the metal can, from the back cover's front face to the front protrusion
+function motor_can_x(motor_body_x = motor_body_x, motor_back_x = motor_back_x) =
+    [ motor_back_x, motor_back_x + motor_body_x ];
 // The back cover is cut to the same height as the body
 function motor_back_height(motor_body_z = motor_body_z) = motor_body_z;
 function motor_axle_outset_back(motor_axle_outset_length_back = motor_axle_outset_length_back) =
