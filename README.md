@@ -55,15 +55,18 @@ on as arguments and defaults to the 130 size motor.
 | `motor_axle_outset_back()`  | 1        | Axle protruding from the rear protrusion. |
 | `motor_back_start_x()`      | 3        | From the back end of the axle to the back face of the body. |
 | `motor_body_height()`       | 15       | Body height across the flats. |
+| `motor_body_width()`        | 20       | Body width, side to side across the round sides. |
+| `motor_can_x()`             | [5, 25]  | Where the metal can starts and ends along x, between the back cover and the front protrusion. |
 | `motor_back_height()`       | 15       | Back cover height, the same as the body's. |
 | `motor_side_notch_length()` | 6        | Length of the notches in the sides of the back cover. |
 
 ## Examples
 
-- `examples/default_motor.scad`: the default motor.
 - `examples/custom_motor.scad`: a longer can and axle.
 - `examples/motor_pocket.scad`: the motor and its wiring clearance subtracted
   from a block.
+- `examples/motor_mount.scad`: a printable mount, a base with a cradle and
+  a strap that screws down over the can, laid out for printing.
 
 <img src="assets/motor_pocket.png" alt="A block with a pocket for the motor" style="width: 400px;" />
 
