@@ -6,6 +6,17 @@ set dotenv-load := false
 default:
     @just --list
 
-# Render the library and every example, failing on any OpenSCAD warning
+# Everything CI runs, bar the tests
+check: fmt-check
+
+# Format the .scad sources with topiary (.topiary/languages.ncl)
+fmt:
+    git ls-files -z '*.scad' | xargs -0 -r topiary format
+
+# Check the .scad sources are formatted, without changing them
+fmt-check:
+    git ls-files -z '*.scad' | xargs -0 -r -n1 topiary format --check
+
+# Render the motor and every example, and check its size, its refusals and the mount's fit
 test:
-    @for f in bdc_motor.scad examples/*.scad; do echo "render $f"; log=$(openscad --hardwarnings --export-format binstl -o - "$f" 2>&1 >/dev/null) || { echo "$log"; exit 1; }; done
+    python3 tests/test_bdc_motor.py

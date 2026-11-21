@@ -9,9 +9,8 @@ length = motor_length();
 back = motor_back_start_x();
 width = motor_body_width();
 
-difference()
-{
-    translate([ -back - wall, -width / 2 - wall, -motor_body_height() / 2 - wall ])
-        cube([ length + back + 2 * wall, width + 2 * wall, motor_body_height() / 2 + wall ]);
-    hobby_dc_motor(render_axle_separately = false, render_wiring_clearance_blocks = true);
+difference() {
+    translate([-back - wall, -width / 2 - wall, -motor_body_height() / 2 - wall])
+        cube([length + back + 2 * wall, width + 2 * wall, motor_body_height() / 2 + wall]);
+    hobby_dc_motor(render_axle_separately=false, render_wiring_clearance_blocks=true);
 }

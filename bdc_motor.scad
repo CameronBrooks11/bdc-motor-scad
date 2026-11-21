@@ -105,9 +105,12 @@ measurement_tol = 0.2;
 /* Dimensions derived from the others, for files that "use" this one. Each defaults to the 130 size motor. */
 
 // Length of the motor without the axle: rear protrusion, back cover, body and front protrusion
-function motor_length(motor_body_x = motor_body_x, motor_back_x = motor_back_x,
-                      motor_front_protrusion_x = motor_front_protrusion_x,
-                      motor_back_protrusion_x = motor_back_protrusion_x) =
+function motor_length(
+    motor_body_x = motor_body_x,
+    motor_back_x = motor_back_x,
+    motor_front_protrusion_x = motor_front_protrusion_x,
+    motor_back_protrusion_x = motor_back_protrusion_x
+) =
     motor_back_protrusion_x + motor_back_x + motor_body_x + motor_front_protrusion_x;
 
 function motor_axle_length(motor_axle_length = motor_axle_length) = motor_axle_length;
@@ -116,46 +119,64 @@ function motor_body_height(motor_body_z = motor_body_z) = motor_body_z;
 function motor_body_width(motor_body_y = motor_body_y) = motor_body_y;
 // [start, end] along x of the metal can, from the back cover's front face to the front protrusion
 function motor_can_x(motor_body_x = motor_body_x, motor_back_x = motor_back_x) =
-    [ motor_back_x, motor_back_x + motor_body_x ];
+    [motor_back_x, motor_back_x + motor_body_x];
 // The back cover is cut to the same height as the body
 function motor_back_height(motor_body_z = motor_body_z) = motor_body_z;
 function motor_axle_outset_back(motor_axle_outset_length_back = motor_axle_outset_length_back) =
     motor_axle_outset_length_back;
 
 // Length of axle protruding from the front protrusion
-function motor_axle_outset_front(motor_axle_length = motor_axle_length,
-                                 motor_axle_outset_length_back = motor_axle_outset_length_back,
-                                 motor_body_x = motor_body_x, motor_back_x = motor_back_x,
-                                 motor_front_protrusion_x = motor_front_protrusion_x,
-                                 motor_back_protrusion_x = motor_back_protrusion_x) =
-    motor_axle_length - motor_axle_outset_length_back -
-    motor_length(motor_body_x, motor_back_x, motor_front_protrusion_x, motor_back_protrusion_x);
+function motor_axle_outset_front(
+    motor_axle_length = motor_axle_length,
+    motor_axle_outset_length_back = motor_axle_outset_length_back,
+    motor_body_x = motor_body_x,
+    motor_back_x = motor_back_x,
+    motor_front_protrusion_x = motor_front_protrusion_x,
+    motor_back_protrusion_x = motor_back_protrusion_x
+) =
+    motor_axle_length - motor_axle_outset_length_back - motor_length(motor_body_x, motor_back_x, motor_front_protrusion_x, motor_back_protrusion_x);
 
 // Distance from the back end of the axle to the back face of the motor body
-function motor_back_start_x(motor_axle_outset_length_back = motor_axle_outset_length_back,
-                            motor_back_protrusion_x = motor_back_protrusion_x) =
+function motor_back_start_x(
+    motor_axle_outset_length_back = motor_axle_outset_length_back,
+    motor_back_protrusion_x = motor_back_protrusion_x
+) =
     motor_axle_outset_length_back + motor_back_protrusion_x;
 
 function motor_side_notch_length(motor_back_side_notch_length_x = motor_back_side_notch_length_x) =
     motor_back_side_notch_length_x;
 
 module hobby_dc_motor(
-    render_axle_separately = render_axle_separately, render_wiring_clearance_blocks = render_wiring_clearance_blocks,
-    body_alpha = body_alpha, trim_alpha = trim_alpha, motor_body_x = motor_body_x, motor_body_y = motor_body_y,
-    motor_body_z = motor_body_z, motor_front_protrusion_x = motor_front_protrusion_x,
-    motor_front_protrusion_diameter = motor_front_protrusion_diameter, motor_axle_diameter = motor_axle_diameter,
-    motor_axle_outset_length_back = motor_axle_outset_length_back, motor_axle_length = motor_axle_length,
-    motor_back_x = motor_back_x, motor_back_tabs_z = motor_back_tabs_z, motor_back_top_flat_y = motor_back_top_flat_y,
-    motor_back_protrusion_x = motor_back_protrusion_x, motor_back_protrusion_diameter = motor_back_protrusion_diameter,
+    render_axle_separately = render_axle_separately,
+    render_wiring_clearance_blocks = render_wiring_clearance_blocks,
+    body_alpha = body_alpha,
+    trim_alpha = trim_alpha,
+    motor_body_x = motor_body_x,
+    motor_body_y = motor_body_y,
+    motor_body_z = motor_body_z,
+    motor_front_protrusion_x = motor_front_protrusion_x,
+    motor_front_protrusion_diameter = motor_front_protrusion_diameter,
+    motor_axle_diameter = motor_axle_diameter,
+    motor_axle_outset_length_back = motor_axle_outset_length_back,
+    motor_axle_length = motor_axle_length,
+    motor_back_x = motor_back_x,
+    motor_back_tabs_z = motor_back_tabs_z,
+    motor_back_top_flat_y = motor_back_top_flat_y,
+    motor_back_protrusion_x = motor_back_protrusion_x,
+    motor_back_protrusion_diameter = motor_back_protrusion_diameter,
     motor_back_protrusion_flat_bottom_zoff = motor_back_protrusion_flat_bottom_zoff,
     motor_back_protrusion_flat_bottom_width = motor_back_protrusion_flat_bottom_width,
     motor_back_side_notch_length_x = motor_back_side_notch_length_x,
     motor_back_side_notch_depth_y = motor_back_side_notch_depth_y,
-    motor_back_side_notch_height_z = motor_back_side_notch_height_z, motor_back_slot_zoff = motor_back_slot_zoff,
-    motor_back_slot_height_z = motor_back_slot_height_z, motor_back_slot_width_y = motor_back_slot_width_y,
-    motor_back_slot_depth_x = motor_back_slot_depth_x, wiring_clearance_y = wiring_clearance_y,
-    wiring_clearance_z = wiring_clearance_z, measurement_tol = measurement_tol)
-{
+    motor_back_side_notch_height_z = motor_back_side_notch_height_z,
+    motor_back_slot_zoff = motor_back_slot_zoff,
+    motor_back_slot_height_z = motor_back_slot_height_z,
+    motor_back_slot_width_y = motor_back_slot_width_y,
+    motor_back_slot_depth_x = motor_back_slot_depth_x,
+    wiring_clearance_y = wiring_clearance_y,
+    wiring_clearance_z = wiring_clearance_z,
+    measurement_tol = measurement_tol
+) {
     // number of fragments for circles, unless the caller has set one
     $fn = $fn > 0 ? $fn : ($preview ? 64 : 128);
 
@@ -170,162 +191,185 @@ module hobby_dc_motor(
     trim_opacity = trim_alpha / 100;
 
     // The axle reaches at least to the end of the front protrusion
-    axle_outset_front = motor_axle_outset_front(motor_axle_length, motor_axle_outset_length_back, motor_body_x,
-                                                motor_back_x, motor_front_protrusion_x, motor_back_protrusion_x);
-    assert(axle_outset_front >= 0,
-           str("motor_axle_length ", motor_axle_length, " is shorter than the motor and the back outset: ",
-               motor_axle_length - axle_outset_front));
+    axle_outset_front = motor_axle_outset_front(
+        motor_axle_length, motor_axle_outset_length_back, motor_body_x,
+        motor_back_x, motor_front_protrusion_x, motor_back_protrusion_x
+    );
+    assert(
+        axle_outset_front >= 0,
+        str(
+            "motor_axle_length ", motor_axle_length, " is shorter than the motor and the back outset: ",
+            motor_axle_length - axle_outset_front
+        )
+    );
 
     // The slot lies inside the rear protrusion
-    assert(motor_back_slot_zoff + motor_back_slot_height_z <= motor_back_protrusion_diameter / 2,
-           str("the back slot ends ", motor_back_slot_zoff + motor_back_slot_height_z,
-               " above the axis, outside a rear protrusion of radius ", motor_back_protrusion_diameter / 2));
+    assert(
+        motor_back_slot_zoff + motor_back_slot_height_z <= motor_back_protrusion_diameter / 2,
+        str(
+            "the back slot ends ", motor_back_slot_zoff + motor_back_slot_height_z,
+            " above the axis, outside a rear protrusion of radius ", motor_back_protrusion_diameter / 2
+        )
+    );
 
     // The flat on the bottom of the rear protrusion is as wide as its diameter and offset make it
-    flat_bottom_width = 2 * sqrt(pow(motor_back_protrusion_diameter / 2, 2) -
-                                 pow(motor_body_z / 2 - motor_back_protrusion_flat_bottom_zoff, 2));
-    assert(abs(flat_bottom_width - motor_back_protrusion_flat_bottom_width) <= measurement_tol,
-           str("motor_back_protrusion_flat_bottom_width ", motor_back_protrusion_flat_bottom_width,
-               " disagrees with the ", flat_bottom_width, " that the protrusion diameter and offset give"));
+    flat_bottom_width = 2 * sqrt(
+        pow(motor_back_protrusion_diameter / 2, 2) - pow(motor_body_z / 2 - motor_back_protrusion_flat_bottom_zoff, 2)
+    );
+    assert(
+        abs(flat_bottom_width - motor_back_protrusion_flat_bottom_width) <= measurement_tol,
+        str(
+            "motor_back_protrusion_flat_bottom_width ", motor_back_protrusion_flat_bottom_width,
+            " disagrees with the ", flat_bottom_width, " that the protrusion diameter and offset give"
+        )
+    );
 
-    module main_body()
-    {
+    module main_body() {
         trim_cube_thickness_main = (motor_body_y - motor_body_z) / 2;
 
-        difference()
-        {
+        difference() {
             // Base motor body (main and back)
-            color(motor_body_color, body_opacity) rotate([ 0, 90, 0 ])
-                cylinder(d1 = motor_body_y, d2 = motor_body_y, h = motor_body_x + motor_back_x);
+            color(motor_body_color, body_opacity) rotate([0, 90, 0])
+                    cylinder(d1=motor_body_y, d2=motor_body_y, h=motor_body_x + motor_back_x);
 
-            color(clipping_color, trim_opacity) translate([ 0, -motor_body_y / 2, -motor_body_y / 2 ])
-            {
-                // Clip bottom, whole motor
-                translate([ -zFite / 2, 0, 0 ])
-                    cube([ motor_body_x + motor_back_x + zFite, motor_body_y, trim_cube_thickness_main ]);
+            color(clipping_color, trim_opacity) translate([0, -motor_body_y / 2, -motor_body_y / 2]) {
+                    // Clip bottom, whole motor
+                    translate([-zFite / 2, 0, 0])
+                        cube([motor_body_x + motor_back_x + zFite, motor_body_y, trim_cube_thickness_main]);
 
-                // Clip top, whole motor. Top back protrusion will be added in later.
-                translate([ -zFite / 2, 0, motor_body_z + trim_cube_thickness_main ])
-                    cube([ motor_body_x + motor_back_x + zFite, motor_body_y, trim_cube_thickness_main ]);
-            };
+                    // Clip top, whole motor. Top back protrusion will be added in later.
+                    translate([-zFite / 2, 0, motor_body_z + trim_cube_thickness_main])
+                        cube([motor_body_x + motor_back_x + zFite, motor_body_y, trim_cube_thickness_main]);
+                }
+            ;
 
             // Side back alignment slots/notches
-            color(clipping_color, trim_opacity) for (side = [ -1, 1 ])
+            color(clipping_color, trim_opacity)for (side = [-1, 1])
             {
                 // Side notch: rectangular cut
-                translate([
-                    motor_back_side_notch_length_x / 2 - zFite / 2,
-                    side * (-motor_body_y / 2 + motor_back_side_notch_depth_y / 4), 0
-                ])
+                translate(
+                    [
+                        motor_back_side_notch_length_x / 2 - zFite / 2,
+                        side * ( -motor_body_y / 2 + motor_back_side_notch_depth_y / 4),
+                        0,
+                    ]
+                )
                     cube(
                         [
-                            motor_back_side_notch_length_x + zFite, motor_back_side_notch_depth_y / 2,
-                            motor_back_side_notch_height_z
+                            motor_back_side_notch_length_x + zFite,
+                            motor_back_side_notch_depth_y / 2,
+                            motor_back_side_notch_height_z,
                         ],
-                        center = true);
+                        center=true
+                    );
 
                 // Side notch: rounded bottom
-                translate([
-                    -zFite / 2,
-                    side * (-motor_body_y / 2 + motor_back_side_notch_height_z - motor_back_side_notch_depth_y / 2), 0
-                ]) rotate([ 0, 90, 0 ])
-                    cylinder(d1 = motor_back_side_notch_height_z, d2 = motor_back_side_notch_height_z,
-                             h = motor_back_side_notch_length_x + zFite);
+                translate(
+                    [
+                        -zFite / 2,
+                        side * ( -motor_body_y / 2 + motor_back_side_notch_height_z - motor_back_side_notch_depth_y / 2),
+                        0,
+                    ]
+                ) rotate([0, 90, 0])
+                        cylinder(
+                            d1=motor_back_side_notch_height_z, d2=motor_back_side_notch_height_z,
+                            h=motor_back_side_notch_length_x + zFite
+                        );
             }
         }
     }
 
-    module rear_cover()
-    {
-        difference()
-        {
+    module rear_cover() {
+        difference() {
             mask_zoff = motor_body_z / 2 - motor_back_protrusion_flat_bottom_zoff;
 
             mask_height = motor_body_z / 2 - mask_zoff;
             // Rear protrusion base cylinder
-            color(motor_body_color, body_opacity) rotate([ 0, 90, 0 ])
-                cylinder(d1 = motor_back_protrusion_diameter, d2 = motor_back_protrusion_diameter,
-                         h = motor_back_protrusion_x + zFite);
+            color(motor_body_color, body_opacity) rotate([0, 90, 0])
+                    cylinder(
+                        d1=motor_back_protrusion_diameter, d2=motor_back_protrusion_diameter,
+                        h=motor_back_protrusion_x + zFite
+                    );
 
             // Rear protrusion bottom flat clipping
             color(clipping_color, trim_opacity)
-                translate([ -zFite, -motor_back_protrusion_diameter / 2, -mask_zoff - mask_height ])
-                    cube([ motor_back_protrusion_x, motor_back_protrusion_diameter, mask_height ], center = false);
+                translate([-zFite, -motor_back_protrusion_diameter / 2, -mask_zoff - mask_height])
+                    cube([motor_back_protrusion_x, motor_back_protrusion_diameter, mask_height], center=false);
 
             // Rear protrusion mid-top flat slot
-            color(clipping_color, trim_opacity) translate([ -zFite, -motor_back_slot_width_y / 2, motor_back_slot_zoff ])
-                cube([ motor_back_slot_depth_x + zFite, motor_back_slot_width_y, motor_back_slot_height_z ]);
-        };
+            color(clipping_color, trim_opacity) translate([-zFite, -motor_back_slot_width_y / 2, motor_back_slot_zoff])
+                    cube([motor_back_slot_depth_x + zFite, motor_back_slot_width_y, motor_back_slot_height_z]);
+        }
+        ;
     }
 
-    module front_protrusion()
-    {
-        rotate([ 0, 90, 0 ]) cylinder(d1 = motor_front_protrusion_diameter, d2 = motor_front_protrusion_diameter,
-                                      h = motor_front_protrusion_x + zFite);
+    module front_protrusion() {
+        rotate([0, 90, 0]) cylinder(
+                d1=motor_front_protrusion_diameter, d2=motor_front_protrusion_diameter,
+                h=motor_front_protrusion_x + zFite
+            );
     }
 
-    module axle(cut = false)
-    {
+    module axle(cut = false) {
         axle_cut_tol = cut ? 0.1 : 0;
-        rotate([ 0, 90, 0 ]) cylinder(d = motor_axle_diameter + axle_cut_tol, h = motor_axle_length);
+        rotate([0, 90, 0]) cylinder(d=motor_axle_diameter + axle_cut_tol, h=motor_axle_length);
     }
 
-    module wiring_tabs()
-    {
-        cube([ motor_back_x, motor_back_top_flat_y, motor_back_tabs_z ], center = false);
+    module wiring_tabs() {
+        cube([motor_back_x, motor_back_top_flat_y, motor_back_tabs_z], center=false);
     }
 
-    module wiring_clearance()
-    {
-        for (side = [ -1, 1 ])
+    module wiring_clearance() {
+        for (side = [-1, 1])
         {
-            translate([
-                // Leave extra room behind motor for wires
-                motor_axle_outset_length_back,
-                //
-                -wiring_clearance_y / 2 + side * (motor_back_top_flat_y / 2 + wiring_clearance_y / 2),
-                motor_body_z / 2
-            ]) cube([ wiring_clearance_x, wiring_clearance_y, wiring_clearance_z ]);
+            translate(
+                [
+                    // Leave extra room behind motor for wires
+                    motor_axle_outset_length_back,
+                    //
+                    -wiring_clearance_y / 2 + side * (motor_back_top_flat_y / 2 + wiring_clearance_y / 2),
+                    motor_body_z / 2,
+                ]
+            ) cube([wiring_clearance_x, wiring_clearance_y, wiring_clearance_z]);
         }
     }
 
     // Motor body (main and back housing)
-    difference()
-    {
-        union()
-        {
+    difference() {
+        union() {
             // Rear protrusion
-            translate([ -motor_back_protrusion_x, 0, 0 ]) rear_cover();
+            translate([-motor_back_protrusion_x, 0, 0]) rear_cover();
 
             // Main motor body
             main_body();
 
             // Front protrusion/axle bearing
-            translate([ motor_body_x + motor_back_x - zFite, 0, 0 ]) color(motor_body_color, body_opacity)
-                front_protrusion();
+            translate([motor_body_x + motor_back_x - zFite, 0, 0]) color(motor_body_color, body_opacity)
+                    front_protrusion();
 
             // Back top protrusion for wiring
-            translate([ 0, -motor_back_top_flat_y / 2, motor_body_z / 2 ]) color(motor_body_color, body_opacity)
-                wiring_tabs();
-        };
+            translate([0, -motor_back_top_flat_y / 2, motor_body_z / 2]) color(motor_body_color, body_opacity)
+                    wiring_tabs();
+        }
+        ;
 
         // Subtract axle shaft from whole motor
-        if (render_axle_separately)
-        {
-            translate([ -motor_back_protrusion_x - zFite, 0, 0 ]) color(clipping_color, trim_opacity) axle(cut = true);
+        if (render_axle_separately) {
+            translate([-motor_back_protrusion_x - zFite, 0, 0]) color(clipping_color, trim_opacity) axle(cut=true);
         }
-    }; // end motor body difference
+    }
+    ; // end motor body difference
 
     // Axle
-    color(motor_axle_color, body_opacity) translate([ -motor_axle_outset_length_back - motor_back_protrusion_x, 0, 0 ])
-        axle();
+    color(motor_axle_color, body_opacity) translate([-motor_axle_outset_length_back - motor_back_protrusion_x, 0, 0])
+            axle();
 
     // Clearance area for motor wiring, if requested
-    if (render_wiring_clearance_blocks)
-    {
-        translate([ -motor_axle_outset_length_back - motor_back_protrusion_x, 0, 0 ])
+    if (render_wiring_clearance_blocks) {
+        translate([-motor_axle_outset_length_back - motor_back_protrusion_x, 0, 0])
             color(clearance_area_color, body_opacity) wiring_clearance();
     }
-};
+}
+;
 
 hobby_dc_motor();
