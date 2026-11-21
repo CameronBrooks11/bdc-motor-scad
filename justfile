@@ -17,6 +17,6 @@ fmt:
 fmt-check:
     git ls-files -z '*.scad' | xargs -0 -r -n1 topiary format --check
 
-# Render the library and every example, failing on any OpenSCAD warning
+# Render the motor and every example, and check its size, its refusals and the mount's fit
 test:
-    @for f in bdc_motor.scad examples/*.scad; do echo "render $f"; log=$(openscad --hardwarnings --export-format binstl -o - "$f" 2>&1 >/dev/null) || { echo "$log"; exit 1; }; done
+    python3 tests/test_bdc_motor.py
